@@ -1,3 +1,36 @@
-.ingredientsStyle {
-  background-color: #acd6e0;
+
+
+.title {
+  text-align: center;
+  padding-top: 30px;
 }
+
+body {
+  background-color: rgba(136, 128, 128, 0.329);
+  font-weight: bold;
+}
+
+.imageStyle {
+  text-align: right;
+  height: 1rem;
+  padding-top: 100px;
+  padding-right: 150px;
+  
+}
+
+.topLevelStyle {
+  display: inline-block;
+  padding-left: 30px;
+  padding-right: 50%;
+}
+
+.buttonStyle {
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.skippingStyle:nth-child(odd) {
+  background-color: rgba(88, 151, 127, 0.829);
+}
+
+

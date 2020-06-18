@@ -40,6 +40,7 @@ class App extends Component {
     }
     return (
       <div className="App">
+        <h1 className="title">25 Different Beers</h1>
           {theBeerPanels}
       </div>
     );

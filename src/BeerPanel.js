@@ -1,19 +1,46 @@
 import React from 'react';
+import LikeButton from './LikeButton';
+ 
+const TotalVolumeList = (props) => {
+    let totalVolumeJSX = null;
+    if (props.volume !== null && typeof props.volume === 'object') {
+        totalVolumeJSX = <p>{"The total ending volume for this beer is " + 
+        props.volume.value + " " + 
+        props.volume.unit}.</p>
+    }
+    return totalVolumeJSX;
+}
 
 const MethodList = (props) => {
     let methodSubPanel = null;
     if (props.method !== null && typeof props.method === 'object') {
         let mash_tempJSX = [];
-        let fermentationJSX = [];
+        let fermentationJSX = "";
         if (props.method.mash_temp.length >= 1) {
-            let mash_temp = null;
-            for (let mash_tempObject of props.method.mash_temp) {
-                mash_temp = <li>{`${mash_tempObject.name} 
-            `}</li>
-            }
+            let mash_tempItem = null;
+                for (let mash_tempItemObject of props.method.mash_temp) {
+                        mash_tempItem = <li>{`At ${mash_tempItemObject.temp.value} ${mash_tempItemObject.temp.unit}`
+                        }</li>
+                }
+            mash_tempJSX.push(mash_tempItem);
         }
+
+        if (props.fermentation !== null && typeof props.fermentation === 'object') {
+        fermentationJSX = <p>{props.fermentation.temp.value + " " + props.fermentation.temp.unit}</p>
+        }
+        
+
+        methodSubPanel = <div className="methodStyle">
+            <h2>The Method</h2>
+            <h3>Fermentation</h3>
+            <ul>{fermentationJSX}</ul>
+            <h3>Mash Temperature</h3>
+            <ul>{mash_tempJSX}</ul>
+        </div>
     }
+    return methodSubPanel;
 }
+
 
 const IngredientsList = (props) => {
     // Assume props.ingredients will always have .hops, .malt, and .yeast as fields
@@ -66,7 +93,7 @@ const BoilVolumeList = (props) => {
     // Assume that boil_volume is being passed in and it's an object
     let boilVolumeJSX = null;
     if (props.boil_volume !== null && typeof props.boil_volume === 'object') {
-        boilVolumeJSX = <p>{"The boil volume for this beer is" + 
+        boilVolumeJSX = <p>{"The boil volume for this beer is " + 
         props.boil_volume.value + " " + 
         props.boil_volume.unit}.</p>
     }
@@ -103,11 +130,24 @@ const BeerPanel = (props) => {
                 topLevelListItems.push(<li>{key}: {value} </li>);
             }
         }
-        return <div>
-                    <ul>{topLevelListItems}</ul>
-                    <BoilVolumeList boil_volume={props.beer.boil_volume} />
-                    <FoodPairingList food_pairing={props.beer.food_pairing} />
-                    <IngredientsList ingredients={props.beer.ingredients} />
+        return <div className="skippingStyle">
+                    <div className="imageStyle">
+                        <img src={props.beer.image_url}></img>
+                    </div>
+                    
+                    <div className="topLevelStyle">
+                        <ul>{topLevelListItems}</ul>
+                    
+                        <BoilVolumeList boil_volume={props.beer.boil_volume} />
+                        <FoodPairingList food_pairing={props.beer.food_pairing} />
+                        <IngredientsList ingredients={props.beer.ingredients} />
+                        <MethodList method={props.beer.method} />
+                        <TotalVolumeList volume={props.beer.volume} />
+                    </div>
+                    <div className="buttonStyle">
+                        <LikeButton />
+                    </div>
+                    
 
                     <hr />
                 </div>;
